@@ -3,6 +3,7 @@ import Display from './Display';
 import Keyboard from './Keyboard';
 
 class Calculator extends Component {
+
   render() {
     return (
       <div className="calculator">

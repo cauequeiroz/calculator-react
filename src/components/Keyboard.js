@@ -5,15 +5,10 @@ const Keyboard = props => {
   return (
     <div className="calculator-keypad">
       <div className="input-keys">
-        <div className="function-keys">
-          <Button name="clear" value="AC" />
-          <Button name="sign" value="±" />
-          <Button name="percent" value="%" />
-        </div>
-
         <div className="digit-keys">
           <Button name="0" value="0" />
           <Button name="dot" value="●" />
+          <Button name="equals" value="=" />
           <Button name="1" value="1" />
           <Button name="2" value="2" />
           <Button name="3" value="3" />
@@ -31,7 +26,7 @@ const Keyboard = props => {
         <Button name="multiply" value="×" />
         <Button name="subtract" value="−" />
         <Button name="add" value="+" />
-        <Button name="equals" value="=" />
+        
       </div>
   </div>
   );
