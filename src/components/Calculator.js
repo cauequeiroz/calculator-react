@@ -98,6 +98,18 @@ class Calculator extends Component {
     });
   }
 
+  equal() {
+    const memory = this.state.memory.slice(-3);
+
+    if ( memory.length !== 3 ||
+      memory[0].type !== 'number' ||
+      memory[1].type !== 'operator' ||
+      memory[2].type !== 'number') return;
+
+    const result = eval(this.state.string);
+    this.setState({ result });
+  }
+
   render() {
     return (
       <div className="calculator">
@@ -107,7 +119,8 @@ class Calculator extends Component {
         <Keyboard
           onEnterDigit={digit => this.enterDigit(digit)}
           onEnterOperator={operator => this.enterOperator(operator)}
-          onEnterDot={() => this.enterDot()} />
+          onEnterDot={() => this.enterDot()}
+          onEnterEqual={() => this.equal()} />
       </div>
     );
   }
