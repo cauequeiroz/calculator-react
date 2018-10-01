@@ -2,14 +2,18 @@ import React from 'react';
 import Button from './Button';
 
 const Keyboard = props => {
-  const { onEnterDigit, onEnterOperator } = props;
+  const {
+    onEnterDigit,
+    onEnterOperator,
+    onEnterDot
+  } = props;
 
   return (
     <div className="calculator-keypad">
       <div className="input-keys">
         <div className="digit-keys">
           <Button onClick={onEnterDigit} name="0" value="0" />
-          <Button name="dot" value="●" />
+          <Button onClick={onEnterDot} name="dot" value="●" />
           <Button name="equals" value="=" />
           <Button onClick={onEnterDigit} name="1" value="1" />
           <Button onClick={onEnterDigit} name="2" value="2" />

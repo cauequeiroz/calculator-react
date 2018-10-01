@@ -31,7 +31,10 @@ class Calculator extends Component {
 
   enterOperator(type) {
     const memory = this.state.memory.slice();
-    if (memory.pop().type === 'operator') return;
+    const lastEntry = memory.pop();
+
+    if (lastEntry.type === 'operator') return;
+    if (lastEntry.value.split('').pop() === '.') return;
 
     const operator = getOperator(type);    
 
@@ -72,6 +75,29 @@ class Calculator extends Component {
     });
   }
 
+  enterDot() {
+    const memory = this.state.memory.slice();
+    const { string } = this.state;
+    const lastEntry = memory.pop();
+
+    if (!lastEntry) return;
+
+    const isNumber = lastEntry.type !== 'number';
+    const hasDot = lastEntry.value.indexOf('.') >= 0
+
+    if ( isNumber || hasDot ) return;
+
+    const newMemory = [...memory, {
+      type: 'number',
+      value: lastEntry.value + '.'
+    }];
+
+    this.setState({
+      memory: newMemory,
+      string: string + '.'
+    });
+  }
+
   render() {
     return (
       <div className="calculator">
@@ -80,7 +106,8 @@ class Calculator extends Component {
           result={this.state.result} />
         <Keyboard
           onEnterDigit={digit => this.enterDigit(digit)}
-          onEnterOperator={operator => this.enterOperator(operator)} />
+          onEnterOperator={operator => this.enterOperator(operator)}
+          onEnterDot={() => this.enterDot()} />
       </div>
     );
   }
