@@ -31,16 +31,17 @@ class Calculator extends Component {
 
   enterOperator(type) {
     const memory = this.state.memory.slice();
+
     const lastEntry = memory.pop();
+    const isOperator = lastEntry.type === 'operator';
+    const isUnfinishedNumber = lastEntry.value.endsWith('.');
 
-    if (lastEntry.type === 'operator') return;
-    if (lastEntry.value.split('').pop() === '.') return;
+    if (isOperator || isUnfinishedNumber) return;
 
-    const operator = getOperator(type);    
-
+    const operator = getOperator(type);
     this.saveOperatorToMemory(operator);
 
-    const string = this.state.string + ' ' + operator + ' ';
+    const string = `${this.state.string} ${operator} `;
     this.setState({ string });
   }
 
