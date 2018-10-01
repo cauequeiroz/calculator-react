@@ -30,11 +30,14 @@ class Calculator extends Component {
   }
 
   enterOperator(type) {
-    const operator = ` ${getOperator(type)} `;    
+    const memory = this.state.memory.slice();
+    if (memory.pop().type === 'operator') return;
+
+    const operator = getOperator(type);    
 
     this.saveOperatorToMemory(operator);
 
-    const string = this.state.string + operator;
+    const string = this.state.string + ' ' + operator + ' ';
     this.setState({ string });
   }
 
@@ -48,10 +51,8 @@ class Calculator extends Component {
       memory[lastIndex].value = memory[lastIndex].value + number;
       newMemory = memory; 
     } else {
-      newMemory = [...memory, {
-        type: 'number',
-        value: number
-      }];
+      const entry = { type: 'number', value: number };
+      newMemory = [...memory, entry];
     }
 
     this.setState({
@@ -61,11 +62,9 @@ class Calculator extends Component {
   }
 
   saveOperatorToMemory(operator) {
-    const { memory } = this.state;
-    const newMemory = [...memory, {
-      type: 'operator',
-      value: operator
-    }];
+    const memory = this.state.memory.slice();
+    const entry = { type: 'operator', value: operator };
+    const newMemory = [...memory, entry];
 
     this.setState({
       memory: newMemory,
