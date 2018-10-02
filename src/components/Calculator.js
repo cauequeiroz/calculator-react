@@ -32,6 +32,8 @@ class Calculator extends Component {
   enterOperator(type) {
     const memory = this.state.memory.slice();
 
+    if (!memory.length) return;
+
     const lastEntry = memory.pop();
     const isOperator = lastEntry.type === 'operator';
     const isUnfinishedNumber = lastEntry.value.endsWith('.');
