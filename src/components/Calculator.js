@@ -110,7 +110,11 @@ class Calculator extends Component {
       memory[2].type !== 'number') {
       result = 0;    
     } else {
-      result = Number(eval(this.state.string)).toFixed(2);
+      result = eval(this.state.string);
+
+      if (!Number.isInteger(result)) {
+        result = result.toFixed(2);
+      }
     }
 
     this.setState({ result });
