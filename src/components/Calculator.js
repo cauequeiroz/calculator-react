@@ -40,6 +40,7 @@ class Calculator extends Component {
 
     const operator = getOperator(type);
     this.saveOperatorToMemory(operator);
+    this.equal();
 
     const string = `${this.state.string} ${operator} `;
     this.setState({ string });
@@ -107,7 +108,7 @@ class Calculator extends Component {
       memory[1].type !== 'operator' ||
       memory[2].type !== 'number') return;
 
-    const result = eval(this.state.string);
+    const result = Number(eval(this.state.string)).toFixed(2);
     this.setState({ result });
   }
 
