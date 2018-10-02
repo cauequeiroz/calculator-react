@@ -26,7 +26,7 @@ class Calculator extends Component {
     this.setState({
       string: newString,
       typing: newTyping
-    });
+    }, this.equal);
   }
 
   enterOperator(type) {
@@ -102,14 +102,46 @@ class Calculator extends Component {
 
   equal() {
     const memory = this.state.memory.slice(-3);
+    let result;
 
     if ( memory.length !== 3 ||
       memory[0].type !== 'number' ||
       memory[1].type !== 'operator' ||
-      memory[2].type !== 'number') return;
+      memory[2].type !== 'number') {
+      result = 0;    
+    } else {
+      result = Number(eval(this.state.string)).toFixed(2);
+    }
 
-    const result = Number(eval(this.state.string)).toFixed(2);
     this.setState({ result });
+  }
+
+  clear() {
+    const memory = this.state.memory.slice();
+    const oldString = this.state.string;
+    const lastEntry = memory.slice(-1)[0];
+
+    if (!lastEntry) return;
+
+    let string;
+
+    if (lastEntry.type === 'operator') {
+      string = oldString.slice(0, -3);
+    } else {
+      string = oldString.slice(0, lastEntry.value.length * -1);
+    }
+    
+    memory.pop();
+    this.setState({ memory, string, typing: 0 }, this.equal);
+  }
+
+  clearAll() {
+    this.setState({
+      string: '',
+      result: 0,
+      typing: null,
+      memory: []
+    })
   }
 
   render() {
@@ -122,7 +154,9 @@ class Calculator extends Component {
           onEnterDigit={digit => this.enterDigit(digit)}
           onEnterOperator={operator => this.enterOperator(operator)}
           onEnterDot={() => this.enterDot()}
-          onEnterEqual={() => this.equal()} />
+          onEnterEqual={() => this.equal()}
+          onClear={() => this.clear()}
+          onClearAll={() => this.clearAll()} />
       </div>
     );
   }

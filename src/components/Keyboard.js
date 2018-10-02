@@ -6,14 +6,16 @@ const Keyboard = props => {
     onEnterDigit,
     onEnterOperator,
     onEnterDot,
-    onEnterEqual
+    onEnterEqual,
+    onClear,
+    onClearAll
   } = props;
 
   return (
     <div>
       <div className="clear-keys">
-        <Button onClick={onEnterDigit} name="C" value="CLEAR" />
-        <Button onClick={onEnterDigit} name="CE" value="CLEAR ALL" />
+        <Button onClick={onClear} name="C" value="CLEAR" />
+        <Button onClick={onClearAll} name="CA" value="CLEAR ALL" />
       </div>
       <div className="calculator-keypad">
         <div className="input-keys">
