@@ -37,7 +37,7 @@ button:active {
 
 #app {
   width: 320px;
-  height: 520px;
+  height: 560px;
   position: relative;
 }
 
@@ -89,6 +89,20 @@ button:active {
 
 .calculator .function-keys {
   display: flex;
+}
+
+.calculator .clear-keys {
+  background: #ccc;
+}
+
+.calculator .clear-keys .calculator-key {
+  display: inline-block;
+  width: 160px;
+  height: 40px;
+  line-height: 40px;
+}
+.calculator .clear-keys .calculator-key + .calculator-key {
+  border-right: none;
 }
 
 .calculator .digit-keys {
