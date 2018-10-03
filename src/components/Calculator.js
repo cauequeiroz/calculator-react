@@ -9,7 +9,7 @@ class Calculator extends Component {
 
     this.state = {
       string: '',
-      result: 0,
+      result: '',
       typing: null,
       memory: []
     }
@@ -26,7 +26,7 @@ class Calculator extends Component {
     this.setState({
       string: newString,
       typing: newTyping
-    }, this.equal);
+    }, this.previewResult);
   }
 
   enterOperator(type) {
@@ -42,7 +42,7 @@ class Calculator extends Component {
 
     const operator = getOperator(type);
     this.saveOperatorToMemory(operator);
-    this.equal();
+    this.previewResult();
 
     const string = `${this.state.string} ${operator} `;
     this.setState({ string });
@@ -102,7 +102,12 @@ class Calculator extends Component {
     });
   }
 
-  equal() {
+  previewResult() {
+    const result = this.calculateResult();
+    this.setState({ result });
+  }
+
+  calculateResult() {
     const memory = this.state.memory.slice(-3);
     let result;
 
@@ -110,7 +115,7 @@ class Calculator extends Component {
       memory[0].type !== 'number' ||
       memory[1].type !== 'operator' ||
       memory[2].type !== 'number') {
-      result = 0;    
+      result = '';    
     } else {
       result = eval(this.state.string);
 
@@ -119,7 +124,20 @@ class Calculator extends Component {
       }
     }
 
-    this.setState({ result });
+    return result;
+  }
+
+  equal() {
+    const result = this.calculateResult();
+
+    if (!result) return;
+
+    this.setState({
+      string: result,
+      result,
+      typing: null,
+      memory: [{ type: 'number', value: String(result) }]
+    });
   }
 
   clear() {
@@ -138,7 +156,7 @@ class Calculator extends Component {
     }
     
     memory.pop();
-    this.setState({ memory, string, typing: 0 }, this.equal);
+    this.setState({ memory, string, typing: 0 }, this.previewResult);
   }
 
   clearAll() {
