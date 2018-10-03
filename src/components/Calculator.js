@@ -162,7 +162,7 @@ class Calculator extends Component {
   clearAll() {
     this.setState({
       string: '',
-      result: 0,
+      result: '',
       typing: null,
       memory: []
     })
